@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ÉDITION SAMSUNG</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            background-color: #0b3d91;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings {
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            margin-left: 20px;
+            transition: transform 0.2s;
+        }
+
+        .settings:hover {
+            transform: rotate(20deg);
+        }
+
+        nav {
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav button, nav a {
+            background: none;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        nav button:hover, nav a:hover {
+            background-color: #0b3d91;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .bloc {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h2 {
+            color: #0b3d91;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        select, button.action {
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            transition: all 0.2s;
+        }
+
+        select:hover, button.action:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .whatsapp, .email, .retour, .special-link {
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            display: block;
+            text-decoration: none;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .whatsapp:hover {
+            background-color: #1ebe5c;
+        }
+
+        .email {
+            background-color: #0072C6;
+            color: white;
+        }
+
+        .email:hover {
+            background-color: #005A9E;
+        }
+
+        .special-link {
+            background-color: #ff6600;
+            color: white;
+        }
+
+        .special-link:hover {
+            background-color: #e65c00;
+        }
+
+        .retour {
+            background-color: #555;
+            color: white;
+        }
+
+        .retour:hover {
+            background-color: #333;
+        }
+
+        /* Panneau paramètres moderne */
+        .panel-settings {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 250px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateY(-20px);
+            opacity: 0;
+            z-index: 1000;
+        }
+
+        .panel-settings.show {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .panel-settings label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .panel-settings input[type="color"], .panel-settings select {
+            margin-top: 5px;
+            width: 100%;
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        /* Zone pour images des services */
+        .service-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .service-images img {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        /* Bouton retour bas */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <h1>ÉDITION SAMSUNG</h1>
+    <span class="settings" onclick="toggleSettings()">⚙️</span>
+</header>
+
+<!-- Panneau paramètres -->
+<div class="panel-settings" id="settingsPanel">
+    <label for="langue">Langue :</label>
+    <select id="langue" onchange="changeLanguage()">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+        <option value="sw">Swahili</option>
+    </select>
+
+    <label for="textColor">Couleur du texte :</label>
+    <input type="color" id="textColor" onchange="changeColors()" value="#000000">
+
+    <label for="linkColor">Couleur des liens :</label>
+    <input type="color" id="linkColor" onchange="changeColors()" value="#0000EE">
+
+    <label for="bgColor">Couleur du fond :</label>
+    <input type="color" id="bgColor" onchange="changeColors()" value="#f2f2f2">
+
+    <button class="retour" onclick="toggleSettings()">🔙 Fermer les paramètres</button>
+</div>
+
+<nav>
+    <button onclick="showSection('accueil')">Accueil</button>
+    <button onclick="showSection('donner')">Donner</button>
+    <button onclick="showSection('client')">Client</button>
+    <button onclick="showSection('historique')">Historique</button>
+</nav>
+
+<div class="container">
+
+    <div id="accueil" class="bloc">
+        <h2 data-fr="Accueil" data-en="Home" data-sw="Nyumbani">Accueil</h2>
+        <p data-fr="Sois le bienvenu dans notre entreprise. Ressens la joie, la paix et comme si tu étais chez toi. Ne t’inquiète pas, sens-toi libre, tu auras tout ce que tu aimes et tu seras heureux toi-même. Sois très le bienvenu."
+           data-en="Welcome to our company. Feel joy, peace, and at home."
+           data-sw="Karibu sana katika kampuni yetu. Hisi furaha, amani na ujisikie kama uko nyumbani. Usiwe na wasiwasi, jisikie huru, utapata kila unachopenda na utafurahi mwenyewe. Karibu sana.">
+           Sois le bienvenu dans notre entreprise. Ressens la joie, la paix et comme si tu étais chez toi. Ne t’inquiète pas, sens-toi libre, tu auras tout ce que tu aimes et tu seras heureux toi-même. Sois très le bienvenu.
+        </p>
+       
+    <img src="image/ee.png" class="cat-img" style="width:100%; border-radius:10px; margin-top:10px;">
+      </div> 
+         <div id="donner" class="bloc" style="display:none;">
+        <h2 data-fr="Services à Donner" data-en="Services to Give" data-sw="Huduma za Kutoa">Services à Donner</h2>
+        <ul>
+            <li data-fr="Filmer action" data-en="Action filming" data-sw="Kupiga Filamu ya Kitendo">Filmer action</li>
+            <li data-fr="Série" data-en="Series" data-sw="Mfululizo">Série</li>
+            <li data-fr="Musique" data-en="Music" data-sw="Muziki">Musique</li>
+            <li data-fr="Décoder le téléphone" data-en="Phone decoding" data-sw="Kufungua simu">Décoder le téléphone</li>
+            <li data-fr="Installer l’ordinateur" data-en="Install computer" data-sw="Sakinisha kompyuta">Installer l’ordinateur</li>
+        </ul>
+
+        <div class="service-images">
+            <img src="image/mmm.jpg" alt="Service 1">
+            <img src="image/action.jpg" alt="Service 2">
+            <img src="image/nn.png" alt="Service 3">
+            <img src="image/love.jpg" alt="Service 4">
+            <img src="image/pp.png" alt="Service 5">
+        </div>
+    </div>
+
+    <div id="client" class="bloc" style="display:none;">
+        <h2 data-fr="Choisissez votre besoin" data-en="Choose your need" data-sw="Chagua unachohitaji">Choisissez votre besoin</h2>
+        <select id="choix">
+            <option value="">-- Faites votre choix --</option>
+            <option>Filme action 2 : 500 FC</option>
+            <option>Série chinois 15 : 500 FC</option>
+            <option>Série hindou 20 : 500 FC</option>
+            <option>Musique 25 : 1000 FC</option>
+            <option>Décodé ordinateur : 15000 FC</option>
+        </select>
+
+        <button class="action" onclick="alert('Merci pour votre choix')">Voir le prix choisi</button>
+
+        <a class="whatsapp" 
+           href="https://api.whatsapp.com/send?phone=243980561544&text=Bonjour%20ÉDITION%20SAMSUNG,%20je%20voudrais%20plus%20d'informations"
+           target="_blank">
+           <img src="image/p.png" alt="WhatsApp" style="width:30px; vertical-align:middle; margin-right:5px;">Me contacter sur WhatsApp
+        </a>
+
+        <a class="email" href="mailto:alexiswengamuloba@gmail.com">
+            Envoyer un e-mail
+        </a>
+
+        <!-- Bouton spécial de lien partageable -->
+        <a class="special-link" href="https://tonlien.com" target="_blank">
+            🌐 Lien spécial à partager
+        </a>
+    </div>
+
+    <div id="historique" class="bloc" style="display:none;">
+        <h2 data-fr="Historique de l’entreprise" data-en="Company History" data-sw="Historia ya Kampuni">Historique de l’entreprise</h2>
+        <p data-fr="L’ouverture de l’entreprise a eu lieu en 2017. Le premier chef était Anselme, qui a travaillé de 2015 à 2018, puis il est parti pour poursuivre ses études. Le deuxième chef, Alexis, a commencé en 2018 jusqu’en 2024. Il a bien travaillé, fait progresser l’activité et attiré des clients. Alexis sait très bien communiquer avec les clients. Le troisième chef est Arthur. Il travaille depuis 2024 jusqu’à aujourd’hui. C’est un homme très intelligent et très travailleur."
+           data-en="The company was founded in 2017. The first manager was Anselme, who worked from 2015 to 2018, then left to pursue his studies. The second manager, Alexis, started in 2018 and worked until 2024. He worked well, improved the business, and attracted clients. Alexis is very good at communicating with clients. The third manager is Arthur. He has been working since 2024 until now. He is a very intelligent and hardworking man."
+           data-sw="Kampuni ilianzishwa mwaka 2017. Meneja wa kwanza alikuwa Anselme, ambaye alifanya kazi kuanzia 2015 hadi 2018, kisha akaondoka kuendelea na masomo yake. Meneja wa pili, Alexis, alianza mwaka 2018 hadi 2024. Alifanya kazi vizuri, akaendeleza shughuli za kampuni na kuvutia wateja. Alexis anajua kuwasiliana vizuri sana na wateja. Meneja wa tatu ni Arthur. Ameanza kazi tangu 2024 hadi sasa. Ni mtu mwenye akili nyingi na mwenye bidii kazini.">
+           L’ouverture de l’entreprise a eu lieu en 2017. Le premier chef était Anselme, qui a travaillé de 2015 à 2018, puis il est parti pour poursuivre ses études. Le deuxième chef, Alexis, a commencé en 2018 jusqu’en 2024. Il a bien travaillé, fait progresser l’activité et attiré des clients. Alexis sait très bien communiquer avec les clients. Le troisième chef est Arthur. Il travaille depuis 2024 jusqu’à aujourd’hui. C’est un homme très intelligent et très travailleur.
+        </p>
+      <img src="image/c.jpg" class="cat-img" style="width:100%; border-radius:10px; margin-top:10px;"> 
+      <h4>ALEXIS SCANDAR Swam</h4>
+      <img src="image/ccc.jpg" class="cat-img" style="width:100%; border-radius:10px; margin-top:10px;"> <h4>ARHTURHO SCANDAR</h4></div>
+
+    <div class="footer">
+        <button class="retour" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">🔝 Retour en haut</button>
+    </div>
+
+</div>
+
+<script>
+    function showSection(id) {
+        ['accueil', 'donner', 'client', 'historique'].forEach(s => {
+            document.getElementById(s).style.display = 'none';
+        });
+        document.getElementById(id).style.display = 'block';
+    }
+
+    function toggleSettings() {
+        const panel = document.getElementById('settingsPanel');
+        panel.classList.toggle('show');
+    }
+
+    function changeLanguage() {
+        const lang = document.getElementById('langue').value;
+        document.querySelectorAll('[data-fr]').forEach(el => {
+            el.innerText = el.getAttribute('data-' + lang);
+        });
+    }
+
+    function changeColors() {
+        const textColor = document.getElementById('textColor').value;
+        const linkColor = document.getElementById('linkColor').value;
+        const bgColor = document.getElementById('bgColor').value;
+
+        document.body.style.color = textColor;
+        document.querySelectorAll('a').forEach(a => a.style.color = linkColor);
+        document.body.style.backgroundColor = bgColor;
+    }
+</script>
+</body>
+</html>
